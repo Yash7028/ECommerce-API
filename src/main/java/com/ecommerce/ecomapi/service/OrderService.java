@@ -10,6 +10,7 @@ import com.ecommerce.ecomapi.entity.User;
 import com.stripe.exception.StripeException;
 import org.springframework.data.domain.Page;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,4 +29,5 @@ public interface OrderService {
     public boolean cancelOrder(Long oderId,String reasonMessage) throws StripeException;
 
     public PaymentIntentResponseDto doPayment(Long userId,PaymentRequest paymentRequest) throws StripeException;
+    public boolean updateOrderStatus(Long orderId,String orderStatus);
 }

@@ -6,13 +6,13 @@ A robust and scalable Spring Boot RESTful API for a full-featured eCommerce plat
 
 ## ✨ Features
 
-* ✅ **User Management**: Registration, login, and role-based access control (`USER`, `SELLER`)
+* ✅ **User Management**: Registration, login, and role-based access control (`USER`, `SELLER`, `ADMIN`)
 * 📦 **Product Catalog**: Add, update, delete, and retrieve products
 * 🛍️ **Shopping Cart & Orders**: Cart management and order placement
 * 💳 **Payment Methods**: Support for multiple payment types (e.g., Cash on Delivery, Stripe)
 * 📬 **Address Management**: Add and manage billing and shipping addresses
 * 📧 **Email Notifications**: Order confirmations and refund confirmations.
-* 🔐 **Authentication**: JWT-based login with refresh token support, , OAuth 2.0 login with Google
+* 🔐 **Authentication**: JWT-based login with refresh token support, OAuth 2.0 login with Google
 * 🔒 **Security**: BCrypt password hashing, Spring Security
 * 🧹 **Validation & Error Handling**: Robust input validation and exception management
 * 📄 **Swagger Docs**: Interactive API documentation via Swagger UI

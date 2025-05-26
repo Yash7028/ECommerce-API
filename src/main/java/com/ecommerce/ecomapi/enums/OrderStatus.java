@@ -5,5 +5,14 @@ public enum OrderStatus {
     PROCESSING,
     SHIPPED,
     DELIVERED,
-    CANCELLED
+    CANCELLED;
+
+    public static OrderStatus fromStringIgnoreCase(String value) {
+        for (OrderStatus orderStatus : OrderStatus.values()) {
+            if (orderStatus.name().equalsIgnoreCase(value)) {
+                return orderStatus;
+            }
+        }
+        throw new IllegalArgumentException("Invalid order status: " + value);
+    }
 }

@@ -25,6 +25,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,9 @@ public class OrderServiceImpl implements OrderService {
     private PaymentService paymentService;
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private SecurityUtil securityUtil;
 
     /*
     * total 2*2
@@ -518,5 +522,18 @@ public class OrderServiceImpl implements OrderService {
         return new PaymentIntentResponseDto("COD_PAYMENT", "Order placed successfully with COD");
     }
 
+    @Transactional
+    public boolean updateOrderStatus(Long orderId, String orderStatus) {
+      Order order = orderRepo.findById(orderId).orElseThrow(() -> new  OrderNotFoundException("Order not found"));
+
+      if (!order.getUser().getId().equals(securityUtil.getCurrentUserId())){
+          throw new AccessDeniedException("You are not authorized to modify this order status.");
+      }
+
+      order.setOrderStatus(OrderStatus.fromStringIgnoreCase(orderStatus));
+
+      orderRepo.save(order);
+      return  true;
+    }
 
 }

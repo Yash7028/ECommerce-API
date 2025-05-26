@@ -48,6 +48,9 @@ public class OrderController {
     @Autowired
     private SecurityUtil securityUtil;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     /* Get all orders */
     @Operation(summary = "Get all orders (admin only)",
             description = "Retrieve all orders with pagination and sorting support. Only accessible by ADMIN.")
@@ -251,6 +254,20 @@ public class OrderController {
         }
         return ResponseEntity.ok(responseDto);
 
+    }
+
+    @Operation(
+            summary = "Update Order Status",
+            description = "Allows SELLER to update the status of an existing order. The order ID and new status are provided in the request body."
+    )
+    @PreAuthorize("hasRole('SELLER')")
+    @PutMapping("/update-status")
+    public ResponseEntity<?> updateStatus(@RequestBody UpdateOrderStatusDto statusDto){
+       Boolean isUpdated = orderService.updateOrderStatus(statusDto.getId(), statusDto.orderStatus);
+       if (isUpdated){
+           return ResponseEntity.ok("Order is updated");
+       }
+       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went to wrong");
     }
 
 }
