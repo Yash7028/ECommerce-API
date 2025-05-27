@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -63,21 +62,12 @@ public class SecurityConfig {
                                         "/favicon.ico",
                                         "/error"
                                 ).permitAll()
-                                .requestMatchers("/rating/get-by-id/**","/product/get-by/**").permitAll()
+                                .requestMatchers("/rating/get-by-id/**","/product/get-by/**","/product/categories").permitAll()
                                 .requestMatchers("/public/**", "/auth/google/**", "/product/getAll", "/api/payment/**").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/cart/**", "/user/**", "/api/payment/**", "/order/**").authenticated()
                                 .requestMatchers(HttpMethod.OPTIONS).permitAll()
                                 .anyRequest().authenticated()
-//                        ===================================
-//                        .requestMatchers()
-//                        .permitAll()
-//                        .requestMatchers("/public/**","/auth/google/**","/product/getAll","/api/payment/**", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs", "/swagger-resources/**").permitAll() // allow login, register, etc.
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                        .requestMatchers("/cart/**", "/user/**", "/api/payment/**", "/order/**").authenticated()
-//                       // .requestMatchers(HttpMethod.GET, "/product/getAll").hasRole("USER")
-//                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
-//                        .anyRequest().authenticated() // ✅ only ONE anyRequest()
                 )
                 .exceptionHandling(exception -> exception
                         .accessDeniedHandler(customAccessDeniedHandler) // 👈 Register handler here

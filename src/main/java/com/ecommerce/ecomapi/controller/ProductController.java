@@ -5,6 +5,7 @@ import com.ecommerce.ecomapi.dto.ProductUpdateDTO;
 import com.ecommerce.ecomapi.entity.Product;
 import com.ecommerce.ecomapi.service.CloudinaryService;
 import com.ecommerce.ecomapi.service.ProductService;
+import com.ecommerce.ecomapi.utility.CategoryDictionary;
 import com.ecommerce.ecomapi.utility.ObjectIdUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -49,6 +50,15 @@ public class ProductController {
     private CloudinaryService cloudinaryService;
     @Autowired
     private ModelMapper modelMapper;
+
+    @Operation(
+            summary = "Get all categories and subcategories",
+            description = "Returns a map of all main categories and their respective subcategories"
+    )
+    @GetMapping("/categories")
+    public ResponseEntity<Map<String, java.util.List<String>>> getAllCategories() {
+        return ResponseEntity.ok(CategoryDictionary.CATEGORY_DICTIONARY);
+    }
 
     /* Get all product */
     @Operation(
